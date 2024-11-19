@@ -4,6 +4,7 @@
 # @version 1.0
 
 import BlynkLib
+import time
 
 # Initialize Blynk
 blynk = BlynkLib.Blynk('YourAuthToken')
@@ -12,7 +13,11 @@ blynk = BlynkLib.Blynk('YourAuthToken')
 automode = False
 start_time = 0
 stop_time = 0
-current_time = None
+current_time = 0
+
+def get_current_time():
+    current_time = time.localtime()  # Get current time as a struct_time object
+    return current_time.tm_hour * 3600 + current_time.tm_min * 60 + current_time.tm_sec
 
 @blynk.VIRTUAL_WRITE(3)
 def v3_write_handler(value):
@@ -45,5 +50,6 @@ def blynk_connected():
 
 while True:
     blynk.run()
+    current_time = get_current_time()
     if current_time >= start_time and current_time <= stop_time:
         sunrisesim()
