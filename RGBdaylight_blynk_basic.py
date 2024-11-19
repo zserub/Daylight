@@ -12,8 +12,8 @@ blynk = BlynkLib.Blynk('YourAuthToken')
 automode = False
 start_time = 0
 stop_time = 0
+current_time = None
 
-# Register Virtual Pins
 @blynk.VIRTUAL_WRITE(3)
 def v3_write_handler(value):
     global automode
@@ -32,6 +32,12 @@ def v4_time_handler(value):
     stop_time = value[1]
     print('Start Time: {}, Stop Time: {}'.format(start_time, stop_time))
 
+
+def sunrisesim():
+    # rgb object
+    pass
+
+
 @blynk.on("connected")
 def blynk_connected():
     print("Raspberry Pi Connected to Blynk")
@@ -39,3 +45,5 @@ def blynk_connected():
 
 while True:
     blynk.run()
+    if current_time >= start_time and current_time <= stop_time:
+        sunrisesim()
