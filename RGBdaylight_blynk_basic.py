@@ -7,17 +7,25 @@ import BlynkLib
 import time
 #from BlynkTimer import BlynkTimer
 from rgb import RGB
+from daylight import Daylight
+from conig import Config
+import argparse
+
+parser = argparse.ArgumentParser(description='Daylight simulator launch options')
+parser.add_argument('--test', action="store_true",  help='Rapidly cycle colors')
+parser.add_argument('--test-color', action="store",  help='Set to a specific daytime color')
+args = parser.parse_args()
+
+config = Config("settings.json")
+# Setup RGB Light Strip
+# R,G,B LED control pins
+lights = RGB(config) 
+
+# Setup Daylight Controller
+day = Daylight(config,lights)
 
 # Initialize Blynk
 blynk = BlynkLib.Blynk('asd')
-
-# rgb object configuration
-config={
-    "white_balance":[1,1,1],
-    "intensity": 1,
-    "led_pins": {"r":17, "g":27, "b":18}
-}
-rgb=RGB(config)
 
 # Init variables
 r=0
@@ -27,6 +35,7 @@ automode = False
 start_time = 0
 stop_time = 0
 current_time = 0
+delay = 10
 
 def get_current_time():
     current_time = time.localtime()  # Get current time as a struct_time object
@@ -39,7 +48,7 @@ def v0_write_handler(value):
         return
     global r
     r=int(value[0])/100
-    rgb.color=[r, g, b]
+    lights.color=[r, g, b]
     print(f'Red value changed to {r}')
 
 # Led control through V1 virtual pin
@@ -49,7 +58,7 @@ def v1_write_handler(value):
         return
     global b
     b=int(value[0])/100
-    rgb.color=[r, g, b]
+    lights.color=[r, g, b]
     print(f'Blue value changed to {b}')
         
 # Led control through V2 virtual pin
@@ -59,7 +68,7 @@ def v2_write_handler(value):
         return
     global g
     g=int(value[0])/100
-    rgb.color=[r, g, b]
+    lights.color=[r, g, b]
     print(f'Green value changed to {g}')
     
 @blynk.on("V3")
@@ -79,10 +88,6 @@ def v4_time_handler(value):
     stop_time = value[1]
     print('Start Time: {}, Stop Time: {}'.format(start_time, stop_time))
     
-def sunrisesim():
-    # rgb object
-    pass
-
 #function to sync the data from virtual pins
 @blynk.on("connected")
 def blynk_connected():
@@ -91,5 +96,6 @@ def blynk_connected():
 while True:
     blynk.run()
     current_time = get_current_time()
-    if current_time >= start_time and current_time <= stop_time:
-        sunrisesim()
+    #if current_time >= start_time and current_time <= stop_time and automode == True:
+    if automode == True and current_time % delay == 0:
+        day.update()
