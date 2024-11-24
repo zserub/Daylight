@@ -12,6 +12,12 @@ from rgb import RGB
 from daylight import Daylight
 from config import Config
 import argparse
+import subprocess
+
+try:
+    subprocess.run(["sudo", "./pi-blaster/pi-blaster"], check=True)
+except subprocess.CalledProcessError as e:
+    print(f"Exception occured: {e}")
 
 parser = argparse.ArgumentParser(description='Daylight simulator launch options')
 parser.add_argument('--test', action="store_true",  help='Rapidly cycle colors')
@@ -27,7 +33,7 @@ lights = RGB(config)
 day = Daylight(config,lights)
 
 # Initialize Blynk
-blynk = BlynkLib.Blynk('asd')
+blynk = BlynkLib.Blynk('rGDrN4x3w9lihTz9YxvCPRzTcMvXNlrS')
 
 # Init variables
 r=0
