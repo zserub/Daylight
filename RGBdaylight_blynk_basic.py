@@ -3,7 +3,7 @@
 # @file RGBdaylight_blynk_basic.py
 # @brief Blynk RGB Daylight with manual control
 # @author Metaphysix
-# @version 1.1
+# @version 1.2
 
 import BlynkLib
 import time
