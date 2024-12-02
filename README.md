@@ -22,8 +22,11 @@ git clone https://github.com/sarfata/pi-blaster.git
 git clone https://github.com/zserub/Daylight.git
 ```
 Copy Daylight/pi-blaster.c to pi-blaster folder and overwrite the existing file
+
 Copy Daylight/RGBdaylight_blynk_basic.py to the rgb-daylight folder
+
 Copy BlynkLib.py to Daylight folder
+
 ```
 cd pi-blaster
 ./autogen.sh

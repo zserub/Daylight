@@ -53,32 +53,29 @@ def get_current_time():
 # Red LED control through V0 virtual pin
 @blynk.on("V0")
 def v0_write_handler(value):
-    if automode == True:
-        return
     global r
     r=int(value[0])/100
-    lights.color=[r, g, b]
-    print(f'Red value changed to {r}')
+    if automode == False:
+        lights.color=[r, g, b, 1]
+        print(f'Red value changed to {r}')
 
 # Blue LED control through V1 virtual pin
 @blynk.on("V1")
 def v1_write_handler(value):
-    if automode == True:
-        return
     global b
     b=int(value[0])/100
-    lights.color=[r, g, b]
-    print(f'Blue value changed to {b}')
+    if automode == False:
+        lights.color=[r, g, b, 1]
+        print(f'Blue value changed to {b}')
         
 # Green LED control through V2 virtual pin
 @blynk.on("V2")
 def v2_write_handler(value):
-    if automode == True:
-        return
     global g
     g=int(value[0])/100
-    lights.color=[r, g, b]
-    print(f'Green value changed to {g}')
+    if automode == False:
+        lights.color=[r, g, b, 1]
+        print(f'Green value changed to {g}')
 
 # Manual/Auto mode
 @blynk.on("V3")
@@ -89,6 +86,7 @@ def v3_write_handler(value):
         print("Auto mode activated")
     else:  # Manual mode
         automode = False
+        lights.color=[r, g, b, 1]
         print("Manual mode activated")    
 
 # Time window
