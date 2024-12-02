@@ -13,16 +13,21 @@ Uses 500Hz PWM signal with 0.1% steps (1000 resolution)
 ## Setup
 
 ```
-sudo apt install python3-astral
+pip install astral
 sudo apt-get install autoconf pkg-config
 git clone https://github.com/AkBKukU/rgb-daylight.git
 cd rgb-daylight
-git clone https://github.com/vshymanskyy/blynk-library-python.git https://github.com/sarfata/pi-blaster.git https://github.com/zserub/Daylight.git
-cp pi-blaster.c ./pi-blaster
+git clone https://github.com/vshymanskyy/blynk-library-python.git
+git clone https://github.com/sarfata/pi-blaster.git
+git clone https://github.com/zserub/Daylight.git
+```
+Copy Daylight/pi-blaster.c to pi-blaster folder and overwrite the existing file
+Copy Daylight/RGBdaylight_blynk_basic.py to the rgb-daylight folder
+Copy BlynkLib.py to Daylight folder
+```
 cd pi-blaster
 ./autogen.sh
-./configure
-make
+./configure && make
 ```
 
 Follow the introduction of [rgb-daylight](https://github.com/AkBKukU/rgb-daylight)

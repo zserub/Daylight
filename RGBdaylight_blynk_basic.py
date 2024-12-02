@@ -33,7 +33,7 @@ lights = RGB(config)
 day = Daylight(config,lights)
 
 # Initialize Blynk
-blynk = BlynkLib.Blynk('rGDrN4x3w9lihTz9YxvCPRzTcMvXNlrS')
+blynk = BlynkLib.Blynk('asd')
 
 # Init variables
 r=0
